@@ -101,8 +101,9 @@ impl Texture {
         CreateTexture::create(&mut (), Format::Rgba8, &buffer, size, settings)
     }
 
-    /// Loads image by relative file name to the asset root.
-    pub fn from_path<P>(path: P) -> Result<Self, String>
+    /// Loads image by relative file name to the asset root. Also applies additional
+    /// TextureSettings
+    pub fn from_path_settings<P>(path: P, settings: &TextureSettings) -> Result<Self, String>
         where P: AsRef<Path>
     {
         let path = path.as_ref();
@@ -119,7 +120,14 @@ impl Texture {
             x => x.to_rgba(),
         };
 
-        Ok(Texture::from_image(&img, &TextureSettings::new()))
+        Ok(Texture::from_image(&img, settings))
+    }
+
+    /// Loads image by relative file name to the asset root.
+    pub fn from_path<P>(path: P) -> Result<Self, String>
+        where P: AsRef<Path>
+    {
+        Texture::from_path_settings(path, &TextureSettings::new())
     }
 
     /// Creates a texture from image.
