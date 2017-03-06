@@ -78,6 +78,11 @@ impl Colored {
         Colored::from_vs_fs(glsl, &vertex_shaders, &fragment_shaders).unwrap()
     }
 
+    /// TODO
+    pub fn get_program(&self) -> GLuint {
+        self.program
+    }
+
     /// Generate using custom vertex and fragment shaders.
     pub fn from_vs_fs(glsl: GLSL, vertex_shaders   : &Shaders<GLSL, str>,
                                   fragment_shaders : &Shaders<GLSL, str>)
@@ -207,6 +212,12 @@ impl Textured {
 
         Textured::from_vs_fs(glsl, &vertex_shaders, &fragment_shaders).unwrap()
     }
+
+    /// TODO
+    pub fn get_program(&self) -> GLuint {
+        self.program
+    }
+
 
     /// Generate using custom vertex and fragment shaders.
     pub fn from_vs_fs(glsl: GLSL, vertex_shaders   : &Shaders<GLSL, str>,
