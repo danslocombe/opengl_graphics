@@ -1,11 +1,10 @@
 extern crate graphics;
 extern crate opengl_graphics;
-extern crate image;
 extern crate piston;
 extern crate sdl2_window;
 
 use std::path::Path;
-use opengl_graphics::{GlGraphics, Texture};
+use opengl_graphics::{GlGraphics, Texture, TextureSettings};
 use piston::event_loop::*;
 use piston::input::*;
 use piston::window::WindowSettings;
@@ -20,13 +19,15 @@ fn main() {
     let (w, h) = (640, 480);
     let mut window: Sdl2Window = WindowSettings::new("opengl_graphics: draw_state", [w, h])
         .exit_on_esc(true)
+        .opengl(opengl)
         .build()
         .unwrap();
 
     let mut clip_inside = true;
     let blends = [Blend::Alpha, Blend::Add, Blend::Invert, Blend::Multiply];
     let mut blend = 0;
-    let rust_logo = Texture::from_path(&Path::new("./assets/rust.png")).unwrap();
+    let rust_logo = Texture::from_path(&Path::new("./assets/rust.png"),
+                                       &TextureSettings::new()).unwrap();
     let mut gl = GlGraphics::new(opengl);
     let mut events = Events::new(EventSettings::new().lazy(true));
     while let Some(e) = events.next(&mut window) {
@@ -35,7 +36,6 @@ fn main() {
 
             gl.draw(args.viewport(), |c, g| {
                 clear([0.8, 0.8, 0.8, 1.0], g);
-                g.clear_stencil(0);
                 Rectangle::new([1.0, 0.0, 0.0, 1.0])
                     .draw([0.0, 0.0, 100.0, 100.0], &c.draw_state, c.transform, g);
 

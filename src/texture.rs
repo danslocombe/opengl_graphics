@@ -82,12 +82,12 @@ impl Texture {
     }
 
     /// Returns empty texture.
-    pub fn empty() -> Result<Self, String> {
+    pub fn empty(settings: &TextureSettings) -> Result<Self, String> {
         CreateTexture::create(&mut (),
                               Format::Rgba8,
                               &[0u8; 4],
                               [1, 1],
-                              &TextureSettings::new())
+                              settings)
     }
 
     /// Loads image from memory, the format is 8-bit greyscale.
